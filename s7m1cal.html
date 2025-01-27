@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آلة حاسبة للمواد</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            text-align: center;
+            background-color: #f9f9f9;
+            margin: 0;
+        }
+        .header {
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 10px 2px rgba(10, 0, 10, 0.1);
+        }
+        h2 {
+            color: #db93f5;
+            font-weight: bold;
+        }
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 0 10px #ddd;
+            background-color: #fff;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #db93f5;
+            color: white;
+        }
+        input {
+            width: 60px;
+            text-align: center;
+            border: 1px solid #d4d7f1;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #db93f5;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #8e44ad;
+        }
+        #total, #average {
+            color: #000000;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>M1 inb Biomedical Engineering</h2>
+    </div>
+
+    <h1>calculatrice </h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Module</th>
+                <th>Coefficient</th>
+                <th>Contrôle</th>
+                <th>Examen</th>
+                <th>n.module*coeff</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Les capteurs biomédicaux</td>
+                <td>2</td>
+                <td><input type="number" id="control1"></td>
+                <td><input type="number" id="exam1"></td>
+                <td id="final1">0</td>
+            </tr>
+            <tr>
+                <td>Microprocesseurs</td>
+                <td>2</td>
+                <td><input type="number" id="control2"></td>
+                <td><input type="number" id="exam2"></td>
+                <td id="final2">0</td>
+            </tr>
+            <tr>
+                <td>Microtechnologie</td>
+                <td>2</td>
+                <td><input type="number" id="control3"></td>
+                <td><input type="number" id="exam3"></td>
+                <td id="final3">0</td>
+            </tr>
+            <tr>
+                <td>Traitement du signal avancé</td>
+                <td>1.5</td>
+                <td><input type="number" id="control4"></td>
+                <td><input type="number" id="exam4"></td>
+                <td id="final4">0</td>
+            </tr>
+            <tr>
+                <td>Traitement des images</td>
+                <td>1.5</td>
+                <td><input type="number" id="control5"></td>
+                <td><input type="number" id="exam5"></td>
+                <td id="final5">0</td>
+            </tr>
+            <tr>
+                <td>Mesure de capteur (TP)</td>
+                <td>2</td>
+                <td>-</td>
+                <td><input type="number" id="exam6"></td>
+                <td id="final6">0</td>
+            </tr>
+            <tr>
+                <td>TP Microprocesseur</td>
+                <td>1</td>
+                <td>-</td>
+                <td><input type="number" id="exam12"></td>
+                <td id="final12">0</td>
+            </tr>
+            <tr>
+                <td>TP Traitement d'image</td>
+                <td>1</td>
+                <td>-</td>
+                <td><input type="number" id="exam7"></td>
+                <td id="final7">0</td>
+            </tr>
+            <tr>
+                <td>TP Traitement des signaux</td>
+                <td>1</td>
+                <td>-</td>
+                <td><input type="number" id="exam8"></td>
+                <td id="final8">0</td>
+            </tr>
+            <tr>
+                <td>Anatomie</td>
+                <td>1</td>
+                <td>-</td>
+                <td><input type="number" id="exam9"></td>
+                <td id="final9">0</td>
+            </tr>
+            <tr>
+                <td>Gestion hospitalière</td>
+                <td>1</td>
+                <td>-</td>
+                <td><input type="number" id="exam10"></td>
+                <td id="final10">0</td>
+            </tr>
+            <tr>
+                <td>Anglais technique</td>
+                <td>1</td>
+                <td>-</td>
+                <td><input type="number" id="exam11"></td>
+                <td id="final11">0</td>
+            </tr>
+        </tbody>
+    </table>
+    <button onclick="calculate()">حساب</button>
+    <h2>المجموع النهائي: <span id="total">0</span></h2>
+    <h2>المعدل النهائي: <span id="average">0</span></h2>
+
+    <script>
+        const coefficients = [2, 2, 2, 1.5, 1.5, 2, 1, 1, 1, 1, 1, 1];
+
+        function calculate() {
+            let totalPoints = 0;
+
+            for (let i = 0; i < coefficients.length; i++) {
+                let control = parseFloat(document.getElementById(`control${i + 1}`)?.value) || 0;
+                let exam = parseFloat(document.getElementById(`exam${i + 1}`)?.value) || 0;
+
+                // حساب النقطة النهائية
+                let finalMark = control > 0 ? (control * 0.4) + (exam * 0.6) : exam;
+                let weightedMark = finalMark * coefficients[i];
+                
+                document.getElementById(`final${i + 1}`).innerText = weightedMark.toFixed(2);
+                totalPoints += weightedMark;
+            }
+
+            // حساب المعدل
+            let totalCoefficients = coefficients.reduce((acc, coeff) => acc + coeff, 0);
+            let average = totalPoints / totalCoefficients;
+
+            document.getElementById("total").innerText = totalPoints.toFixed(2);
+            document.getElementById("average").innerText = average.toFixed(2);
+        }
+    </script>
+    <p>réalisé par : Ahmed Ammar  Amina Chaimaa</p>
+</body>
+</html>
